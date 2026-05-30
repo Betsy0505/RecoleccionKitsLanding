@@ -366,9 +366,10 @@
     }
 
     .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 28px;
+      justify-content: center;
     }
 
     .feature-card {
@@ -377,6 +378,8 @@
       border-radius: 20px;
       padding: 32px;
       transition: all 0.25s;
+      flex: 0 1 calc(33.333% - 20px);
+      min-width: 260px;
     }
 
     .feature-card:hover {
@@ -948,7 +951,7 @@
       .hero-image { display: none; }
       .hero-ctas { justify-content: center; }
       .hero-stats { justify-content: center; }
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid .feature-card { flex: 0 1 calc(50% - 14px); }
       .preview-inner { grid-template-columns: 1fr; }
       .dash-mock { display: none; }
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -959,7 +962,7 @@
     }
 
     @media (max-width: 600px) {
-      .features-grid { grid-template-columns: 1fr; }
+      .features-grid .feature-card { flex: 0 1 100%; }
       .footer-grid { grid-template-columns: 1fr; }
       nav { padding: 0 4%; }
       .nav-links { display: none; }
@@ -1084,11 +1087,11 @@
         <h3>Dashboard en Tiempo Real</h3>
         <p>Ve de un vistazo cuántos kits recogiste, cuántos entregaste y cuánto recaudaste — todo actualizado al momento.</p>
       </div>
-      <div class="feature-card">
+      <!-- <div class="feature-card">
         <div class="feature-icon icon-pink"><i class="ri-team-line"></i></div>
         <h3>Administración de Gestores</h3>
         <p>Crea y asigna gestores a tus recolecciones. Controla accesos y monitorea el desempeño de cada uno por separado.</p>
-      </div>
+      </div> -->
       <div class="feature-card">
         <div class="feature-icon icon-yellow"><i class="ri-bank-line"></i></div>
         <h3>Datos Bancarios Seguros</h3>
