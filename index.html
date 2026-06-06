@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="kitlo-contact-endpoint" content="https://dev-api-recoleccion-kits.bytekod.online/api/contacto" />
   <title>Kitlo — Gestión de Recolección de Kits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
@@ -832,6 +833,198 @@
       color: var(--text-muted);
     }
 
+
+    /* ─── MODAL VENTAS ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 13, 46, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 28px 28px 24px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      transform: translateY(24px);
+      transition: transform 0.25s;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--gray-light);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: #E5E7EB; }
+
+    .modal-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .modal-logo img {
+      height: 34px;
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .modal .modal-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(91,79,216,0.12);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #9CA3AF;
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-group input.field-invalid,
+    .form-group textarea.field-invalid {
+      border-color: #DC2626;
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.12);
+    }
+
+    .form-error {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: #B91C1C;
+    }
+
+    .modal-submit {
+      width: 100%;
+      padding: 12px;
+      background: var(--purple);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .modal-submit:hover {
+      background: var(--purple-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(91,79,216,0.35);
+    }
+
+    .modal-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    .form-feedback {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .form-feedback.show {
+      display: block;
+    }
+
+    .form-feedback.success {
+      background: #E8FAF3;
+      color: #047857;
+      border: 1px solid #A7F3D0;
+    }
+
+    .form-feedback.error {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
     /* ─── CTA BANNER ─── */
     .cta-banner {
       background: linear-gradient(135deg, #1E1B4B 0%, #3730A3 50%, #5B4FD8 100%);
@@ -893,8 +1086,9 @@
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
+      grid-template-columns: minmax(260px, 2fr) repeat(2, minmax(180px, 1fr));
       gap: 48px;
+      align-items: start;
       padding-bottom: 48px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
@@ -935,6 +1129,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
       font-size: 0.82rem;
     }
 
@@ -960,6 +1156,7 @@
       .pricing-hero-card { grid-template-columns: 1fr; gap: 36px; padding: 36px 24px; }
       .pricing-free-row { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
       .cta-banner .mascot-sm { display: none; }
     }
 
@@ -985,8 +1182,8 @@
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div style="display:flex;gap:12px;">
-    <a href="https://www.kitlo.online/" target="_blank" class="btn btn-outline">Iniciar sesión</a>
-    <a href="https://www.kitlo.online/" target="_blank" class="btn btn-primary">Empezar gratis</a>
+    <a href="https://app.kitlo.online/login" target="_blank" class="btn btn-outline">Iniciar sesión</a>
+    <a href="https://app.kitlo.online/register" target="_blank" class="btn btn-primary">Empezar gratis</a>
   </div>
 </nav>
 
@@ -1004,7 +1201,7 @@
         el día de la carrera — todo desde un solo lugar.
       </p>
       <div class="hero-ctas">
-        <a href="https://www.kitlo.online/" target="_blank" class="btn btn-white btn-lg">Empieza gratis <i class="ri-arrow-right-line"></i></a>
+        <a href="https://app.kitlo.online/login" target="_blank" class="btn btn-white btn-lg">Empieza gratis <i class="ri-arrow-right-line"></i></a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
@@ -1202,7 +1399,7 @@
         <h3>1 licencia · 1 recolección · Pago único</h3>
         <div class="big-price"><sup>$</sup>50<sub>MXN</sub></div>
         <div class="price-note">Pago único · Sin renovaciones automáticas</div>
-        <a href="https://www.kitlo.online/" target="_blank" class="btn btn-white btn-lg">Adquirir licencia <i class="ri-arrow-right-line"></i></a>
+        <a href="https://app.kitlo.online/login" target="_blank" class="btn btn-white btn-lg">Adquirir licencia <i class="ri-arrow-right-line"></i></a>
       </div>
       <div>
         <ul class="pricing-features">
@@ -1243,12 +1440,57 @@
     <h2>Coordina tu próxima<br/>recolección con <span>Kitlo</span></h2>
     <p>Únete a los recolectores que ya dejaron de usar grupos de WhatsApp y hojas de papel.</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://www.kitlo.online/" target="_blank" class="btn btn-white btn-lg">Crear cuenta gratis <i class="ri-arrow-right-line"></i></a>
-      <a href="https://www.kitlo.online/" target="_blank" class="btn btn-ghost btn-lg"><i class="ri-message-3-line"></i> Hablar con ventas</a>
+      <a href="https://app.kitlo.online/login" target="_blank" class="btn btn-white btn-lg">Crear cuenta gratis <i class="ri-arrow-right-line"></i></a>
+      <button onclick="openModal()" class="btn btn-ghost btn-lg"><i class="ri-message-3-line"></i> Hablar con ventas</button>
     </div>
   </div>
   <img class="mascot-sm" src="assets/Copilot_20260506_003703.png" alt="" />
 </section>
+
+<!-- ─── MODAL VENTAS ─── -->
+<div class="modal-overlay" id="modalVentas" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">
+      <i class="ri-close-line"></i>
+    </button>
+
+    <div class="modal-logo">
+      <img src="assets/Copilot_20260506_003119.png" alt="Kitlo" />
+    </div>
+
+    <h3>Hablemos</h3>
+    <p class="modal-sub">Déjanos tus datos y nos ponemos en contacto contigo a la brevedad por WhatsApp.</p>
+
+    <form id="formVentas" onsubmit="handleSubmit(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="ventas-nombre">Nombre completo</label>
+          <input type="text" id="ventas-nombre" name="nombre" placeholder="Ej. María García" maxlength="100" autocomplete="name" required />
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="ventas-telefono">Celular</label>
+          <input type="tel" id="ventas-telefono" name="telefono" placeholder="5512345678" maxlength="10" autocomplete="tel" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ventas-correo">Correo electrónico</label>
+        <input type="email" id="ventas-correo" name="correo" placeholder="Ej. maria@gmail.com" maxlength="150" autocomplete="email" required />
+      </div>
+      <div class="form-group">
+        <label for="ventas-comentario">Comentario</label>
+        <textarea id="ventas-comentario" name="comentario" placeholder="Cuéntanos cómo te podemos ayudar" maxlength="1000" required></textarea>
+      </div>
+
+      <button type="submit" class="modal-submit">
+        Enviar mensaje <i class="ri-send-plane-line"></i>
+      </button>
+
+      <div id="form-feedback" class="form-feedback" role="status" aria-live="polite"></div>
+    </form>
+
+    <p class="modal-note">Te contactaremos en menos de 24 horas.</p>
+  </div>
+</div>
 
 <!-- ─── FOOTER ─── -->
 <footer>
@@ -1269,20 +1511,17 @@
     <div class="footer-col">
       <h4>Empresa</h4>
       <ul>
-        <li><a href="#">Acerca de</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Carreras</a></li>
-        <li><a href="#">Contacto</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
-    <div class="footer-col">
+    <!-- <div class="footer-col">
       <h4>Legal</h4>
       <ul>
         <li><a href="#">Términos de uso</a></li>
         <li><a href="#">Privacidad</a></li>
         <li><a href="#">Cookies</a></li>
       </ul>
-    </div>
+    </div> -->
   </div>
   <div class="footer-bottom">
     <span>© 2026 Kitlo. Todos los derechos reservados.</span>
@@ -1290,5 +1529,170 @@
   </div>
 </footer>
 
+
+<script>
+  function openModal() {
+    const form = document.getElementById('formVentas');
+    form.reset();
+    clearFieldErrors(form);
+    const feedback = document.getElementById('form-feedback');
+    feedback.className = 'form-feedback';
+    feedback.textContent = '';
+    document.getElementById('modalVentas').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalVentas').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalVentas')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function clearFieldErrors(form) {
+    form.querySelectorAll('.field-invalid').forEach(field => field.classList.remove('field-invalid'));
+    form.querySelectorAll('.form-error').forEach(error => error.remove());
+  }
+
+  function showFieldError(input, message) {
+    if (!input) return;
+    input.classList.add('field-invalid');
+
+    const error = document.createElement('p');
+    error.className = 'form-error';
+    error.textContent = message;
+    input.parentElement.appendChild(error);
+  }
+
+  function showFeedback(message, type) {
+    const feedback = document.getElementById('form-feedback');
+    feedback.textContent = message;
+    feedback.className = 'form-feedback show ' + type;
+  }
+
+  function getContactoEndpoint() {
+    const metaEndpoint = document.querySelector('meta[name="kitlo-contact-endpoint"]');
+    const endpointFromMeta = metaEndpoint && metaEndpoint.content ? metaEndpoint.content.trim() : '';
+    const endpointFromWindow = typeof window.KITLO_CONTACT_ENDPOINT === 'string'
+      ? window.KITLO_CONTACT_ENDPOINT.trim()
+      : '';
+
+    return endpointFromWindow || endpointFromMeta || '/api/contacto';
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('formVentas');
+    const submitButton = form.querySelector('.modal-submit');
+
+    const nombreInput = document.getElementById('ventas-nombre');
+    const telefonoInput = document.getElementById('ventas-telefono');
+    const correoInput = document.getElementById('ventas-correo');
+    const comentarioInput = document.getElementById('ventas-comentario');
+
+    clearFieldErrors(form);
+    showFeedback('', 'error');
+    document.getElementById('form-feedback').className = 'form-feedback';
+
+    const payload = {
+      nombre: nombreInput.value.trim(),
+      telefono: telefonoInput.value.trim(),
+      correo: correoInput.value.trim(),
+      comentario: comentarioInput.value.trim()
+    };
+
+    if (!payload.nombre || !payload.telefono || !payload.correo || !payload.comentario) {
+      showFeedback('Completa todos los campos para enviar tu mensaje.', 'error');
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.innerHTML = 'Enviando... <i class="ri-loader-4-line ri-spin"></i>';
+
+    try {
+      const endpoint = getContactoEndpoint();
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let result = null;
+      try {
+        result = await response.json();
+      } catch (_error) {
+        result = null;
+      }
+
+      if (response.ok && result && result.success !== false) {
+        showFeedback(
+          result.message || 'Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto contigo pronto.',
+          'success'
+        );
+        form.reset();
+        setTimeout(closeModal, 3500);
+        return;
+      }
+
+      if (response.status === 422 && result && result.errors) {
+        const fieldMap = {
+          nombre: nombreInput,
+          telefono: telefonoInput,
+          correo: correoInput,
+          comentario: comentarioInput
+        };
+
+        Object.entries(result.errors).forEach(([field, messages]) => {
+          const firstMessage = Array.isArray(messages) ? messages[0] : 'Revisa este campo';
+          showFieldError(fieldMap[field], firstMessage);
+        });
+
+        showFeedback(result.message || 'Revisa los campos marcados e intenta de nuevo.', 'error');
+        return;
+      }
+
+      if (response.status === 405) {
+        showFeedback('No se pudo enviar tu mensaje. Intenta de nuevo en unos momentos.', 'error');
+        return;
+      }
+
+      if (response.status === 429) {
+        showFeedback('Enviaste demasiados mensajes seguidos. Espera un momento e intenta de nuevo.', 'error');
+        return;
+      }
+
+      if (response.status === 502 || response.status === 503 || response.status === 500) {
+        showFeedback('Hubo un problema al enviar tu mensaje. Intenta nuevamente en unos minutos.', 'error');
+        return;
+      }
+
+      showFeedback(
+        (result && result.message) || 'No se pudo enviar tu mensaje. Intenta nuevamente en unos minutos.',
+        'error'
+      );
+    } catch (error) {
+      console.error('Error al enviar formulario de contacto:', error);
+
+      if (navigator.onLine === false) {
+        showFeedback('Sin conexión a internet. Verifica tu red e intenta nuevamente.', 'error');
+        return;
+      }
+
+      showFeedback('No se pudo enviar tu mensaje. Verifica tu conexión e intenta de nuevo.', 'error');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'Enviar mensaje <i class="ri-send-plane-line"></i>';
+    }
+  }
+</script>
 </body>
 </html>
